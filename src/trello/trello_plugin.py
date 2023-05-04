@@ -1,22 +1,23 @@
 from trello import TrelloClient
 import os
 
-class Trello(object):
+class Trello:
+    def __init__(self):
+        self.api_key = os.environ.get("TRELLO_API_KEY")
+        self.api_secret = os.environ.get("TRELLO_API_SECRET")
+        self.token = os.environ.get("TRELLO_TOKEN")
+        self.board_id = os.environ.get("TRELLO_BOARD_ID")
+    
     def create_trello_card(self, name, description):
-        api_key = os.environ.get("TRELLO_API_KEY")
-        api_secret = os.environ.get("TRELLO_API_SECRET")
-        token = os.environ.get("TRELLO_TOKEN")
-        board_id = os.environ.get("TRELLO_BOARD_ID")
-
         # create a Trello client object
         client = TrelloClient(
-            api_key=api_key,
-            api_secret=api_secret,
-            token=token
+            api_key=self.api_key,
+            api_secret=self.api_secret,
+            token=self.token
         )
 
         # get the board object for the specified board ID
-        board = client.get_board(board_id)
+        board = client.get_board(self.board_id)
 
         # create a new card on the board with the specified name and description
         lists = board.list_lists()
