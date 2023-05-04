@@ -1,19 +1,13 @@
 
 from trello import TrelloClient
-
-secrets =  {
-    "api_key": "",
-    "api_secret": "",
-    "token": "",
-    "board_id": ""
-}
+import os
 
 class Trello(object):
     def create_trello_card(self, name, description):
-        api_key = secrets["api_key"]
-        api_secret = secrets["api_secret"]
-        token = secrets["token"]
-        board_id = secrets["board_id"]
+        api_key = os.getenv("api_key")
+        api_secret = os.getenv("api_secret")
+        token = os.getenv("token")
+        board_id = os.getenv("board_id")
 
         # create a Trello client object
         client = TrelloClient(
