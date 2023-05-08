@@ -43,7 +43,7 @@ class AutoGPTTrelloPlugin(AutoGPTPluginTemplate):
 
         Returns:
             bool: True if the plugin can handle the post_prompt method."""
-        return False
+        return True
     
 
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
@@ -62,6 +62,21 @@ class AutoGPTTrelloPlugin(AutoGPTPluginTemplate):
                 "description": "<description>"
             },
             self.trello.create_trello_card
+        )
+        prompt.add_command(
+            "create_trello_cards",
+            "Create a new Trello card on your board",
+            { "cards" : [
+                {
+                    "name": "<name>",
+                    "description": "<description>"
+                },
+                {
+                    "name": "<name>",
+                    "description": "<description>"
+                }]
+            },
+            self.trello.create_trello_cards
         )
 
         return prompt
@@ -189,7 +204,7 @@ class AutoGPTTrelloPlugin(AutoGPTPluginTemplate):
 
         Returns:
             bool: True if the plugin can handle the post_command method."""
-        return False
+        return True
 
     def post_command(self, command_name: str, response: str) -> str:
         """This method is called after the command is executed.
@@ -201,7 +216,7 @@ class AutoGPTTrelloPlugin(AutoGPTPluginTemplate):
         Returns:
             str: The resulting response.
         """
-        pass
+        return f'POST_COMMAND: {command_name} response: {response}'
 
     def can_handle_chat_completion(
         self, messages: Dict[Any, Any], model: str, temperature: float, max_tokens: int

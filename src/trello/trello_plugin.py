@@ -8,6 +8,11 @@ class Trello:
         self.token = os.environ.get("TRELLO_TOKEN")
         self.board_id = os.environ.get("TRELLO_BOARD_ID")
     
+    def create_trello_cards(self, cards: list):
+        [self.create_trello_card(card["name"], card["description"]) for card in cards]
+
+        return f"Created {len(cards)} cards!"
+    
     def create_trello_card(self, name, description):
         # create a Trello client object
         client = TrelloClient(
